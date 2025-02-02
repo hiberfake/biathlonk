@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">BiathlonK</string>
+
+    <!-- Top-Level Destinations -->
+    <string name="navigation_schedule">Events</string>
+    <string name="navigation_leaderboard">Bestenliste</string>
+</resources>
