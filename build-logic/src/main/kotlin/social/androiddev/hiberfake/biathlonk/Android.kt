@@ -27,6 +27,10 @@ internal fun Project.configureAndroid(extension: CommonExtension<*, *, *, *, *, 
             checkDependencies = true
             warningsAsErrors = true
         }
+
+        testOptions {
+            unitTests.isReturnDefaultValues = true
+        }
     }
 
     if (extension is KotlinAndroidProjectExtension) {
