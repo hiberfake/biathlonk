@@ -1,10 +1,14 @@
 package social.androiddev.hiberfake.biathlonk.core.network.di
 
+import android.content.Context
+import coil3.ImageLoader
+import coil3.network.okhttp.OkHttpNetworkFetcherFactory
 import com.skydoves.sandwich.retrofit.adapters.ApiResponseCallAdapterFactory
 import dagger.Lazy
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import kotlinx.serialization.json.Json
 import okhttp3.Call
@@ -36,12 +40,6 @@ internal object NetworkModule {
             encodeDefaults = true
             ignoreUnknownKeys = true
             isLenient = true
-//            serializersModule = SerializersModule {
-//                contextual(LocalDate::class, LocalDateSerializer)
-//                contextual(LocalTime::class, LocalTimeSerializer)
-//                contextual(OffsetDateTime::class, OffsetDateTimeSerializer)
-//                contextual(UUID::class, UuidSerializer)
-//            }
         }
 
         return json.asConverterFactory("application/json".toMediaType())
@@ -69,6 +67,19 @@ internal object NetworkModule {
     fun provideBiathlonResultsApi(retrofit: Retrofit): BiathlonResultsApi = retrofit.create(
         BiathlonResultsApi::class.java,
     )
+
+    @Provides
+    @Singleton
+    fun provideImageLoader(
+        @ApplicationContext context: Context,
+        callFactory: Lazy<Call.Factory>,
+    ) = ImageLoader.Builder(context)
+        .components {
+            add(
+                OkHttpNetworkFetcherFactory(callFactory = callFactory.get()),
+            )
+        }
+        .build()
 }
 
 private fun OkHttpClient.Builder.addLoggingInterceptor() = apply {
