@@ -91,7 +91,7 @@ private fun ScheduleScreen(
     val layoutDirection = LocalLayoutDirection.current
     val scope = rememberCoroutineScope()
     val sheetState = rememberModalBottomSheetState()
-    val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
+    val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
     val dividerPadding = remember {
         with(ListItemDefaults) {
             PaddingValues(
