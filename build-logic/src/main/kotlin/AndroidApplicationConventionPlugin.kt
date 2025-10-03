@@ -52,6 +52,8 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
 
                 "testImplementation"(project(":core:testing"))
                 "androidTestImplementation"(project(":core:testing"))
+
+                "androidTestImplementation"(libs.androidx.test.uiautomator)
             }
         }
     }

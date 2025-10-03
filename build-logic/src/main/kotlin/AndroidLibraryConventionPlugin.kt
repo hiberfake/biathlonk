@@ -1,5 +1,6 @@
 import com.android.build.api.variant.LibraryAndroidComponentsExtension
 import com.android.build.gradle.LibraryExtension
+import com.android.build.gradle.TestedExtension
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
@@ -9,6 +10,7 @@ import org.jetbrains.kotlin.gradle.dsl.KotlinAndroidProjectExtension
 import social.androiddev.hiberfake.biathlonk.configureAndroid
 import social.androiddev.hiberfake.biathlonk.configureGradleManagedDevices
 import social.androiddev.hiberfake.biathlonk.configureKotlin
+import social.androiddev.hiberfake.biathlonk.configureUnitTests
 import social.androiddev.hiberfake.biathlonk.disableUnnecessaryAndroidTests
 import social.androiddev.hiberfake.biathlonk.libs
 
@@ -36,6 +38,10 @@ class AndroidLibraryConventionPlugin : Plugin<Project> {
 
             extensions.configure<LibraryAndroidComponentsExtension> {
                 disableUnnecessaryAndroidTests(this)
+            }
+
+            extensions.configure<TestedExtension> {
+                configureUnitTests(this)
             }
 
             dependencies {

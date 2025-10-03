@@ -36,6 +36,7 @@ androidx-test-rules = "1.7.0"
 androidx-test-runner = "1.7.0"
 androidx-test-uiautomator = "2.3.0"
 androidx-window = "1.5.0"
+bytebuddy = "1.17.7"
 coil = "3.3.0"
 compose-lints = "1.4.2"
 dagger = "2.57.2"
@@ -48,9 +49,11 @@ mockk = "1.14.6"
 moduleGraph = "2.9.0"
 okhttp = "5.1.0"
 retrofit = "3.0.0"
+robolectric = "4.16"
 sandwich = "2.1.3"
 spotless = "8.0.0"
 timber = "5.0.1"
+turbine = "1.2.1"
 
 [libraries]
 aboutlibraries = { group = "com.mikepenz", name = "aboutlibraries-compose-m3", version.ref = "aboutlibraries" }
@@ -108,6 +111,8 @@ androidx-test-uiautomator = { group = "androidx.test.uiautomator", name = "uiaut
 
 androidx-window = { group = "androidx.window", name = "window", version.ref = "androidx-window" }
 
+bytebuddy-agent = { group = "net.bytebuddy", name = "byte-buddy-agent", version.ref = "bytebuddy" }
+
 coil = { group = "io.coil-kt.coil3", name = "coil", version.ref = "coil" }
 coil-compose = { group = "io.coil-kt.coil3", name = "coil-compose", version.ref = "coil" }
 coil-networkOkhttp = { group = "io.coil-kt.coil3", name = "coil-network-okhttp", version.ref = "coil" }
@@ -138,10 +143,14 @@ okhttp-logging-interceptor = { group = "com.squareup.okhttp3", name = "logging-i
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
 retrofit-converterKotlinxSerialization = { group = "com.squareup.retrofit2", name = "converter-kotlinx-serialization", version.ref = "retrofit" }
 
+robolectric = { group = "org.robolectric", name = "robolectric", version.ref = "robolectric" }
+
 sandwich = { group = "com.github.skydoves", name = "sandwich", version.ref = "sandwich" }
 sandwich-retrofit = { group = "com.github.skydoves", name = "sandwich-retrofit", version.ref = "sandwich" }
 
 timber = { group = "com.jakewharton.timber", name = "timber", version.ref = "timber" }
+
+turbine = { group = "app.cash.turbine", name = "turbine", version.ref = "turbine" }
 
 # Plugin dependencies
 android-gradle-plugin = { group = "com.android.tools.build", name = "gradle", version.ref = "agp" }

@@ -1,5 +1,5 @@
 plugins {
-    alias(libs.plugins.biathlonk.android.library.compose)
+    alias(libs.plugins.biathlonk.android.library)
     alias(libs.plugins.biathlonk.spotless)
 }
 
@@ -10,6 +10,9 @@ android {
 dependencies {
     implementation(projects.core.common)
     implementation(projects.core.data)
+    implementation(projects.core.network)
+
+    api(libs.kotlinx.coroutinesTest)
 
     api(libs.androidx.test.core)
     api(libs.androidx.test.espresso)
@@ -17,11 +20,12 @@ dependencies {
     api(libs.androidx.test.runner)
     api(libs.androidx.test.rules)
 
-    api(libs.androidx.compose.ui.testJunit4)
-    debugApi(libs.androidx.compose.ui.testManifest)
-
     api(libs.junit)
 
     api(libs.mockk.android)
     api(libs.mockk.agent)
+
+    api(libs.robolectric)
+
+    api(libs.turbine)
 }
