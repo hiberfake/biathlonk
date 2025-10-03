@@ -47,9 +47,6 @@ class AndroidLibraryConventionPlugin : Plugin<Project> {
 
                 "testImplementation"(project(":core:testing"))
                 "androidTestImplementation"(project(":core:testing"))
-
-                "testImplementation"(libs.mockk)
-                "androidTestImplementation"(libs.mockk.android)
             }
         }
     }

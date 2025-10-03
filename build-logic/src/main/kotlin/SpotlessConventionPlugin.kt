@@ -30,7 +30,6 @@ class SpotlessConventionPlugin : Plugin<Project> {
                                 "ktlint_standard_no-empty-first-line-in-class-body" to "enabled",
                                 // Experimental rules
                                 "ktlint_experimental" to "enabled",
-                                "ktlint_standard_blank-line-between-when-conditions" to "disabled",
                             ),
                         )
                 }

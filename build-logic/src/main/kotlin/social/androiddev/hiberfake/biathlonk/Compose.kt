@@ -20,9 +20,8 @@ internal fun Project.configureCompose(extension: CommonExtension<*, *, *, *, *, 
         dependencies {
             val bom = platform(libs.androidx.compose.bom)
             "implementation"(bom)
-            "androidTestImplementation"(bom)
             "debugImplementation"(libs.androidx.compose.ui.tooling)
-            "implementation"(libs.androidx.compose.ui.toolingPreview)
+            "debugImplementation"(libs.androidx.compose.ui.toolingPreview)
 
             "lintChecks"(libs.compose.lints)
         }

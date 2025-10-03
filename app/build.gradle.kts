@@ -64,9 +64,6 @@ dependencies {
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.compose.material3.adaptiveNavigationSuite)
 
-    implementation(libs.androidx.hilt.work)
-    ksp(libs.androidx.hilt.compiler)
-
     implementation(libs.coil)
 
 //    baselineProfile(projects.benchmark)

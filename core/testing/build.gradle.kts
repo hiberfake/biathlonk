@@ -22,5 +22,6 @@ dependencies {
 
     api(libs.junit)
 
-    api(libs.mockk)
+    api(libs.mockk.android)
+    api(libs.mockk.agent)
 }

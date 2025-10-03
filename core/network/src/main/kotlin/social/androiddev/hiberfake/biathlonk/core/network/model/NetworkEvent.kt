@@ -1,8 +1,8 @@
 package social.androiddev.hiberfake.biathlonk.core.network.model
 
-import kotlinx.datetime.Instant
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import kotlin.time.Instant
 
 @Serializable
 data class NetworkEvent(

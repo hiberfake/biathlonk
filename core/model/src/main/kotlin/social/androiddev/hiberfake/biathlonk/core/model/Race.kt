@@ -1,6 +1,6 @@
 package social.androiddev.hiberfake.biathlonk.core.model
 
-import kotlinx.datetime.Instant
+import kotlin.time.Instant
 
 data class Race(
     val id: String,

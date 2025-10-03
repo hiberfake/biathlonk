@@ -31,6 +31,7 @@ fun BiathlonTheme(
         }
 
         isDarkTheme -> DarkColorScheme
+
         else -> LightColorScheme
     }
 
