@@ -10,17 +10,21 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
+import androidx.core.content.pm.PackageInfoCompat
 import social.androiddev.hiberfake.biathlonk.core.designsystem.theme.BiathlonTheme
 import social.androiddev.hiberfake.biathlonk.core.ui.icons.Icons
 import social.androiddev.hiberfake.biathlonk.core.ui.icons.filled.ArrowBack
@@ -34,14 +38,14 @@ internal fun SettingsRoute(
     onNavigateToLibraries: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-//    val context = LocalContext.current
-//    val version = remember {
-//        val packageInfo = context.packageInfo
-//        "${packageInfo.versionName} (${PackageInfoCompat.getLongVersionCode(packageInfo)})"
-//    }
+    val context = LocalContext.current
+    val version = remember {
+        val packageInfo = context.packageManager.getPackageInfo(context.packageName, 0)
+        "${packageInfo.versionName} (${PackageInfoCompat.getLongVersionCode(packageInfo)})"
+    }
 
     SettingsScreen(
-//        version = version,
+        version = version,
         onBackClick = onNavigateUp,
         onLibrariesClick = onNavigateToLibraries,
         modifier = modifier,
@@ -51,12 +55,13 @@ internal fun SettingsRoute(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun SettingsScreen(
-//    version: String,
+    version: String,
     onBackClick: () -> Unit,
     onLibrariesClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
+    val dividerModifier = Modifier.padding(start = 16.dp)
 
     Scaffold(
         modifier = modifier.nestedScroll(connection = scrollBehavior.nestedScrollConnection),
@@ -91,10 +96,13 @@ private fun SettingsScreen(
                     label = stringResource(R.string.libraries_title),
                     onClick = onLibrariesClick,
                 )
-//                HorizontalDivider(modifier = Modifier.padding(start = 16.dp))
-//                SettingsItem(title = stringResource(R.string.settings_version)) {
-//                    Text(text = version)
-//                }
+                HorizontalDivider(modifier = dividerModifier)
+                SettingsItem(
+                    label = stringResource(R.string.settings_version),
+                    enabled = false,
+                ) {
+                    Text(text = version)
+                }
             }
         }
     }
@@ -104,7 +112,7 @@ private fun SettingsScreen(
 @Composable
 private fun SettingsScreenPreview() = BiathlonTheme {
     SettingsScreen(
-//        version = "1.0 (1)",
+        version = "1.0.0 (1)",
         onBackClick = {},
         onLibrariesClick = {},
     )
