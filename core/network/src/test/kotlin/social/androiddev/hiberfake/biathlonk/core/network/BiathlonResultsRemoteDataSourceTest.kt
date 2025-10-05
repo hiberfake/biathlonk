@@ -22,7 +22,7 @@ class BiathlonResultsRemoteDataSourceTest {
     val mockApi = mockk<BiathlonResultsApi>()
 
     val dataSource = BiathlonResultsRemoteDataSource(
-        ioDispatcher = UnconfinedTestDispatcher(),
+        dispatcher = UnconfinedTestDispatcher(),
         biathlonResultsApi = mockApi,
     )
 

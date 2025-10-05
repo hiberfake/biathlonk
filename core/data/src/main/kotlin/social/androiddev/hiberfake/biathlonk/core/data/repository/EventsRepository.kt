@@ -23,8 +23,8 @@ import javax.inject.Singleton
 
 @Singleton
 class EventsRepository @Inject constructor(
-    private val biathlonResultsRemoteDataSource: BiathlonResultsRemoteDataSource,
     @ApplicationScope private val externalScope: CoroutineScope,
+    private val biathlonResultsRemoteDataSource: BiathlonResultsRemoteDataSource,
 ) {
     private val mutex = Mutex()
 

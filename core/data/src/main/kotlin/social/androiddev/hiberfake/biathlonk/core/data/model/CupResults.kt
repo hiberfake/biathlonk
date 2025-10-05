@@ -7,8 +7,8 @@ import social.androiddev.hiberfake.biathlonk.core.network.model.NetworkAthlete
 import social.androiddev.hiberfake.biathlonk.core.network.model.NetworkCupResults
 
 internal fun NetworkCupResults.asExternalModel(category: Category) = CupResults(
-    cupId = cupId,
-    cupName = cupName,
+    id = id,
+    name = name,
     category = category,
-    rows = rows.map(NetworkAthlete::asExternalModel).toImmutableList(),
+    athletes = athletes.map(NetworkAthlete::asExternalModel).toImmutableList(),
 )

@@ -23,12 +23,12 @@ class LeaderboardViewModel @Inject constructor(
     seasonsRepository: SeasonsRepository,
     resultsRepository: ResultsRepository,
 ) : ViewModel() {
-    val cupResultsState = seasonsRepository.getSeasons()
+    val cupResultsState = seasonsRepository.getSeasonsStream()
         .map { seasons ->
             seasons.first(Season::hasCurrentResults)
         }
         .transform { season ->
-            emitAll(resultsRepository.getCupResults(season.id))
+            emitAll(resultsRepository.getCupResultsStream(season.id))
         }
         .map(UiState<ImmutableList<CupResults>>::Success)
         .stateIn(

@@ -13,21 +13,21 @@ import social.androiddev.hiberfake.biathlonk.core.common.di.ApplicationScope
 import social.androiddev.hiberfake.biathlonk.core.data.model.asExternalModel
 import social.androiddev.hiberfake.biathlonk.core.model.Category
 import social.androiddev.hiberfake.biathlonk.core.model.CupResults
+import social.androiddev.hiberfake.biathlonk.core.model.Discipline
 import social.androiddev.hiberfake.biathlonk.core.network.BiathlonResultsRemoteDataSource
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class ResultsRepository @Inject constructor(
-    private val biathlonResultsRemoteDataSource: BiathlonResultsRemoteDataSource,
     @ApplicationScope private val externalScope: CoroutineScope,
+    private val biathlonResultsRemoteDataSource: BiathlonResultsRemoteDataSource,
 ) {
     private val mutex = Mutex()
 
     private var latestCupResultsBySeasonId: MutableMap<String, List<CupResults>> = mutableMapOf()
 
-    // TODO: Discipline (TS — Total Score)
-    fun getCupResults(
+    fun getCupResultsStream(
         seasonId: String,
         refresh: Boolean = false,
     ) = flow {
@@ -37,15 +37,15 @@ class ResultsRepository @Inject constructor(
                     .mapSuccess {
                         this
                             .filter { it.level == 1 }
-                            .filter { it.catId in Category.entries.map(Category::name) }
-                            .filter { it.disciplineId == "TS" }
+                            .filter { it.categoryId in Category.entries.map(Category::id) }
+                            .filter { it.disciplineId in Discipline.entries.map(Discipline::id) }
                     }
                     .getOrElse(emptyList())
 
                 val cupResults = cups.map { cup ->
                     async {
                         biathlonResultsRemoteDataSource.getCupResults(cup.id)
-                            .mapSuccess { asExternalModel(Category.valueOf(cup.catId)) }
+                            .mapSuccess { asExternalModel(Category.ofId(cup.categoryId)) }
                             .getOrElse(null)
                     }
                 }

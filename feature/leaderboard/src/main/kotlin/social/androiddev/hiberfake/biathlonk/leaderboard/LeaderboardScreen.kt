@@ -100,8 +100,8 @@ private fun LeaderboardScreen(
                             ) {
                                 Text(
                                     text = when (category) {
-                                        Category.SW -> "Frauen"
-                                        Category.SM -> "Männer"
+                                        Category.SINGLE_WOMEN -> "Frauen"
+                                        Category.SINGLE_MEN -> "Männer"
                                     },
                                 )
                             }
@@ -145,7 +145,7 @@ private fun LazyListScope.athletes(
 
         is UiState.Success -> {
             itemsIndexed(
-                items = state.data[selectedIndex].rows,
+                items = state.data[selectedIndex].athletes,
                 key = { _, athlete -> athlete.id },
                 contentType = { _, _ -> Athlete::class },
             ) { index, athlete ->

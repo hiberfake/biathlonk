@@ -10,18 +10,18 @@ import javax.inject.Singleton
 
 @Singleton
 class BiathlonResultsRemoteDataSource @Inject constructor(
-    @Dispatcher(IO) private val ioDispatcher: CoroutineDispatcher,
+    @Dispatcher(IO) private val dispatcher: CoroutineDispatcher,
     private val biathlonResultsApi: BiathlonResultsApi,
 ) {
-    suspend fun getSeasons() = withContext(ioDispatcher) {
+    suspend fun getSeasons() = withContext(dispatcher) {
         biathlonResultsApi.getSeasons()
     }
 
-    suspend fun getEvents(seasonId: String) = withContext(ioDispatcher) {
+    suspend fun getEvents(seasonId: String) = withContext(dispatcher) {
         biathlonResultsApi.getEvents(seasonId = seasonId)
     }
 
-    suspend fun getRaces(eventId: String) = withContext(ioDispatcher) {
+    suspend fun getRaces(eventId: String) = withContext(dispatcher) {
         biathlonResultsApi.getRaces(eventId = eventId)
     }
 
@@ -31,11 +31,11 @@ class BiathlonResultsRemoteDataSource @Inject constructor(
 //        }
 //    }
 
-    suspend fun getCups(seasonId: String) = withContext(ioDispatcher) {
+    suspend fun getCups(seasonId: String) = withContext(dispatcher) {
         biathlonResultsApi.getCups(seasonId = seasonId)
     }
 
-    suspend fun getCupResults(cupId: String) = withContext(ioDispatcher) {
+    suspend fun getCupResults(cupId: String) = withContext(dispatcher) {
         biathlonResultsApi.getCupResults(cupId = cupId)
     }
 }

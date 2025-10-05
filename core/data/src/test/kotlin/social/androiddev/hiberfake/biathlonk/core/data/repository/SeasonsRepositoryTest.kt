@@ -55,7 +55,7 @@ class SeasonsRepositoryTest {
 
         coEvery { mockRemoteDataSource.getSeasons() } returns ApiResponse.of { networkSeasons }
 
-        val flow = repository.getSeasons()
+        val flow = repository.getSeasonsStream()
 
         assertEquals(seasons, flow.first())
     }
@@ -66,7 +66,7 @@ class SeasonsRepositoryTest {
 
         coEvery { mockRemoteDataSource.getSeasons() } returns ApiResponse.Failure.Error("")
 
-        val flow = repository.getSeasons()
+        val flow = repository.getSeasonsStream()
 
         assertEquals(seasons, flow.first())
     }
@@ -77,7 +77,7 @@ class SeasonsRepositoryTest {
 
         coEvery { mockRemoteDataSource.getSeasons() } returns ApiResponse.exception(IOException())
 
-        val flow = repository.getSeasons()
+        val flow = repository.getSeasonsStream()
 
         assertEquals(seasons, flow.first())
     }

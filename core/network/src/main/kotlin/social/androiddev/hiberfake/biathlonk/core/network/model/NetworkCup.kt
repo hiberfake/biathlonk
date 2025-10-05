@@ -10,7 +10,7 @@ data class NetworkCup(
     @SerialName("Level")
     val level: Int,
     @SerialName("CatId")
-    val catId: String,
+    val categoryId: String,
     @SerialName("DisciplineId")
     val disciplineId: String,
 )

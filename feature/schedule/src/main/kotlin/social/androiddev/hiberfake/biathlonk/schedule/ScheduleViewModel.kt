@@ -42,7 +42,7 @@ class ScheduleViewModel @Inject constructor(
         mutableStateOf<String?>(null)
     }
 
-    val eventsState = seasonsRepository.getSeasons()
+    val eventsState = seasonsRepository.getSeasonsStream()
         .map { seasons ->
             seasons.first(Season::isCurrentlyScheduled)
         }

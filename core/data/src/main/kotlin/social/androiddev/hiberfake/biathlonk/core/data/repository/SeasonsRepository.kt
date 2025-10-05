@@ -3,9 +3,11 @@ package social.androiddev.hiberfake.biathlonk.core.data.repository
 import com.skydoves.sandwich.getOrElse
 import com.skydoves.sandwich.mapSuccess
 import com.skydoves.sandwich.suspendOnSuccess
+import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.async
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
@@ -19,14 +21,23 @@ import javax.inject.Singleton
 
 @Singleton
 class SeasonsRepository @Inject constructor(
-    private val biathlonResultsRemoteDataSource: BiathlonResultsRemoteDataSource,
     @ApplicationScope private val externalScope: CoroutineScope,
+    private val biathlonResultsRemoteDataSource: BiathlonResultsRemoteDataSource,
 ) {
     private val mutex = Mutex()
 
     private var latestSeasons: List<Season> = emptyList()
 
-    fun getSeasons(refresh: Boolean = false) = flow {
+    /**
+     * Stream API to fetch all the seasons.
+     *
+     * The seasons are cached in memory.
+     *
+     * @param refresh [Boolean] Whether to refresh the seasons from the remote data source.
+     *
+     * @return [Flow] of [ImmutableList] of [Season]
+     */
+    fun getSeasonsStream(refresh: Boolean = false) = flow {
         val seasons = if (refresh || latestSeasons.isEmpty()) {
             externalScope.async {
                 biathlonResultsRemoteDataSource.getSeasons()

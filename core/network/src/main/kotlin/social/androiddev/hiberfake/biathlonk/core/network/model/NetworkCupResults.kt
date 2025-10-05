@@ -6,9 +6,9 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class NetworkCupResults(
     @SerialName("CupId")
-    val cupId: String,
+    val id: String,
     @SerialName("CupName")
-    val cupName: String,
+    val name: String,
     @SerialName("Rows")
-    val rows: List<NetworkAthlete>,
+    val athletes: List<NetworkAthlete>,
 )
