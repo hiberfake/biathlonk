@@ -5,6 +5,7 @@ import org.gradle.kotlin.dsl.configure
 import social.androiddev.hiberfake.biathlonk.configureCompose
 import social.androiddev.hiberfake.biathlonk.libs
 
+@Suppress("unused")
 class AndroidLibraryComposeConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {

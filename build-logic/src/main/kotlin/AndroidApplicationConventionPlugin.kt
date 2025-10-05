@@ -11,6 +11,7 @@ import social.androiddev.hiberfake.biathlonk.configureGradleManagedDevices
 import social.androiddev.hiberfake.biathlonk.configureKotlin
 import social.androiddev.hiberfake.biathlonk.libs
 
+@Suppress("unused")
 class AndroidApplicationConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {

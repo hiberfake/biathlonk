@@ -14,6 +14,7 @@ import social.androiddev.hiberfake.biathlonk.configureUnitTests
 import social.androiddev.hiberfake.biathlonk.disableUnnecessaryAndroidTests
 import social.androiddev.hiberfake.biathlonk.libs
 
+@Suppress("unused")
 class AndroidLibraryConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {

@@ -5,6 +5,7 @@ import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.dependencies
 import social.androiddev.hiberfake.biathlonk.libs
 
+@Suppress("unused")
 class AndroidHiltConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {
