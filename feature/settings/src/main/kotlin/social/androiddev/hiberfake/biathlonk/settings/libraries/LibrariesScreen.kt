@@ -1,6 +1,8 @@
 package social.androiddev.hiberfake.biathlonk.settings.libraries
 
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -65,6 +67,7 @@ private fun LibrariesScreen(
                 scrollBehavior = scrollBehavior,
             )
         },
+        contentWindowInsets = WindowInsets.safeDrawing,
     ) { contentPadding ->
         LibrariesContainer(
             libraries = libraries,

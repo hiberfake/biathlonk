@@ -3,12 +3,13 @@ package social.androiddev.hiberfake.biathlonk.schedule
 import androidx.activity.compose.ReportDrawnWhen
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.calculateEndPadding
 import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -117,6 +118,7 @@ private fun ScheduleScreen(
                 scrollBehavior = scrollBehavior,
             )
         },
+        contentWindowInsets = WindowInsets.safeDrawing,
     ) { contentPadding ->
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
@@ -136,7 +138,6 @@ private fun ScheduleScreen(
     if (sheetState.isVisible) {
         ModalBottomSheet(
             onDismissRequest = { scope.launch { sheetState.hide() } },
-            modifier = Modifier.statusBarsPadding(),
             sheetState = sheetState,
         ) {
             LazyColumn(
