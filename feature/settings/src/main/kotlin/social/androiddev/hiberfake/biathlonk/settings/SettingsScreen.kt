@@ -17,7 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import social.androiddev.hiberfake.biathlonk.core.designsystem.theme.BiathlonTheme
 import social.androiddev.hiberfake.biathlonk.core.ui.icons.Icons
@@ -97,14 +97,12 @@ private fun SettingsScreen(
     }
 }
 
-@Preview
+@PreviewLightDark
 @Composable
-private fun Preview() {
-    BiathlonTheme {
-        SettingsScreen(
-//            version = "1.0 (1)",
-            onBackClick = {},
-            onLibrariesClick = {},
-        )
-    }
+private fun SettingsScreenPreview() = BiathlonTheme {
+    SettingsScreen(
+//        version = "1.0 (1)",
+        onBackClick = {},
+        onLibrariesClick = {},
+    )
 }

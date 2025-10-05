@@ -30,7 +30,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalLayoutDirection
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
@@ -163,15 +163,13 @@ private fun LazyListScope.athletes(
     }
 }
 
-@Preview
+@PreviewLightDark
 @Composable
-private fun Preview(
+private fun LeaderboardScreenPreview(
     @PreviewParameter(LeaderboardPreviewParameterProvider::class)
     state: UiState<ImmutableList<CupResults>>,
-) {
-    BiathlonTheme {
-        LeaderboardScreen(state = state)
-    }
+) = BiathlonTheme {
+    LeaderboardScreen(state = state)
 }
 
 private class LeaderboardPreviewParameterProvider : PreviewParameterProvider<UiState<ImmutableList<CupResults>>> {

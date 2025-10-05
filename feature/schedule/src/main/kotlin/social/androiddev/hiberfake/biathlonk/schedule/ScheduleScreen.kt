@@ -32,7 +32,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
@@ -231,12 +231,12 @@ private fun LazyListScope.races(
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
-@Preview
+@PreviewLightDark
 @Composable
-private fun Preview(
+private fun ScheduleScreenPreview(
     @PreviewParameter(SchedulePreviewParameterProvider::class)
     states: Pair<UiState<ImmutableList<Event>>, UiState<ImmutableList<Race>>>,
-) {
+) = BiathlonTheme {
     val (eventsState, racesState) = states
     val sheetState = rememberModalBottomSheetState()
 
@@ -244,14 +244,12 @@ private fun Preview(
         sheetState.show()
     }
 
-    BiathlonTheme {
-        ScheduleScreen(
-            eventsState = eventsState,
-            racesState = racesState,
-            onEventClick = {},
-            onSettingsClick = {},
-        )
-    }
+    ScheduleScreen(
+        eventsState = eventsState,
+        racesState = racesState,
+        onEventClick = {},
+        onSettingsClick = {},
+    )
 }
 
 private class SchedulePreviewParameterProvider :
