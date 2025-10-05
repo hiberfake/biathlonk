@@ -8,7 +8,6 @@ import com.skydoves.sandwich.isFailure
 import com.skydoves.sandwich.isSuccess
 import io.mockk.coEvery
 import io.mockk.mockk
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.Rule
 import social.androiddev.hiberfake.biathlonk.core.network.api.BiathlonResultsApi
@@ -19,7 +18,6 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
-@OptIn(ExperimentalCoroutinesApi::class)
 class BiathlonResultsRemoteDataSourceTest {
     @get:Rule
     val mainDispatcherRule = MainDispatcherRule()

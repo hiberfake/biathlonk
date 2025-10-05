@@ -13,6 +13,7 @@ internal fun Project.configureKotlin(extension: KotlinAndroidProjectExtension) {
                 add("-Xannotation-default-target=param-property")
 
                 add("-opt-in=kotlin.time.ExperimentalTime")
+                add("-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi")
             }
         }
     }

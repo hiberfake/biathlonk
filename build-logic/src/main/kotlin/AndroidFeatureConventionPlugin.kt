@@ -14,7 +14,7 @@ class AndroidFeatureConventionPlugin : Plugin<Project> {
             }
 
             dependencies {
-                "implementation"(project(":core:data"))
+                "implementation"(project(":core:domain"))
                 "implementation"(project(":core:ui"))
 
                 "implementation"(libs.androidx.lifecycle.runtimeCompose)

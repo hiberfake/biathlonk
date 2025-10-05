@@ -4,7 +4,6 @@ import app.cash.turbine.test
 import com.skydoves.sandwich.ApiResponse
 import io.mockk.coEvery
 import io.mockk.mockk
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.runTest
 import org.junit.Rule
@@ -17,7 +16,6 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
-@OptIn(ExperimentalCoroutinesApi::class)
 class SeasonsRepositoryTest {
     @get:Rule
     val mainDispatcherRule = MainDispatcherRule()

@@ -64,10 +64,6 @@ internal fun ScheduleRoute(
     val eventsState by viewModel.eventsState.collectAsStateWithLifecycle()
     val racesState by viewModel.racesState.collectAsStateWithLifecycle()
 
-    LaunchedEffect(Unit) {
-        viewModel.initialize()
-    }
-
     ScheduleScreen(
         eventsState = eventsState,
         racesState = racesState,

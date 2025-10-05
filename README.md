@@ -2,7 +2,7 @@
 
 ## Requirements
 
-For Development, you require at least [Android Studio Meerkat](https://developer.android.com/studio).
+For Development, you require at least [Android Studio Narwhal 3 Feature Drop | 2025.1.3](https://developer.android.com/studio).
 
 ## Development
 
@@ -17,15 +17,15 @@ For Development, you require at least [Android Studio Meerkat](https://developer
 
 The app contains the following modules:
 
-| Name                                           | Responsibility                                                                                                                                          |
-|------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `:app`                                         | Brings everything together required for the app to function correctly. This includes UI scaffolding and navigation.                                     |
-| `:feature:schedule`, `:feature:leaderboard`, … | Functionality associated with a specific feature or user journeys. Typically contains UI components and ViewModels which reads data from other modules. |
-| `:core:common`                                 | Provides common classes shared between modules, dispatchers and an external scope to offload work to the background.                                    |
-| `:core:data`                                   | Provides app data.                                                                                                                                      |
-| `:core:designsystem`                           | Defines the design system for the app with theming, colors, typography and more.                                                                        |
-| `:core:model`                                  | Provides model classes used throughout the app.                                                                                                         |
-| `:core:network`                                | Makes network requests and handles responses from remote data sources.                                                                                  |
-| `:core:testing`                                | Provides utilities for testing.                                                                                                                         |
-| `:core:ui`                                     | Provides UI components, composables and resources, such as icons and text, used by different features.                                                  |
-
+| Name                 | Responsibility                                                                                                                                          |
+|----------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `:app`               | Brings everything together required for the app to function correctly. This includes UI scaffolding and navigation.                                     |
+| `:core:common`       | Provides common classes shared between modules, dispatchers and an external scope to offload work to the background.                                    |
+| `:core:data`         | Provides app data.                                                                                                                                      |
+| `:core:domain`       | Provides use cases.                                                                                                                                     |
+| `:core:designsystem` | Defines the design system for the app with theming, colors, typography and more.                                                                        |
+| `:core:model`        | Provides model classes used throughout the app.                                                                                                         |
+| `:core:network`      | Makes network requests and handles responses from remote data sources.                                                                                  |
+| `:core:testing`      | Provides utilities for testing.                                                                                                                         |
+| `:core:ui`           | Provides UI components and resources, such as icons and text, used by different features.                                                               |
+| `:feature:*`         | Functionality associated with a specific feature or user journeys. Typically contains UI components and ViewModels which reads data from other modules. |
