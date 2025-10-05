@@ -144,16 +144,18 @@ private fun LazyListScope.athletes(
         }
 
         is UiState.Success -> {
+            val athletes = state.data[selectedIndex].athletes
+
             itemsIndexed(
-                items = state.data[selectedIndex].athletes,
+                items = athletes,
                 key = { _, athlete -> athlete.id },
                 contentType = { _, _ -> Athlete::class },
             ) { index, athlete ->
-                if (index > 0) {
+                AthleteItem(athlete = athlete)
+
+                if (index < athletes.lastIndex) {
                     HorizontalDivider(modifier = dividerModifier)
                 }
-
-                AthleteItem(athlete = athlete)
             }
         }
 

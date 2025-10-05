@@ -170,19 +170,21 @@ private fun LazyListScope.events(
         }
 
         is UiState.Success -> {
+            val events = state.data
+
             itemsIndexed(
-                items = state.data,
+                items = events,
                 key = { _, event -> event.id },
                 contentType = { _, _ -> Event::class },
             ) { index, event ->
-                if (index > 0) {
-                    HorizontalDivider(modifier = dividerModifier)
-                }
-
                 EventItem(
                     event = event,
                     onClick = { onClick(event.id) },
                 )
+
+                if (index < events.lastIndex) {
+                    HorizontalDivider(modifier = dividerModifier)
+                }
             }
         }
 
@@ -209,16 +211,18 @@ private fun LazyListScope.races(
         }
 
         is UiState.Success -> {
+            val races = state.data
+
             itemsIndexed(
-                items = state.data,
+                items = races,
                 key = { _, race -> race.id },
                 contentType = { _, _ -> Race::class },
             ) { index, race ->
-                if (index > 0) {
+                RaceItem(race = race)
+
+                if (index < state.data.lastIndex) {
                     HorizontalDivider(modifier = dividerModifier)
                 }
-
-                RaceItem(race = race)
             }
         }
 
