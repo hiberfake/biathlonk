@@ -1,9 +1,9 @@
 package social.androiddev.hiberfake.biathlonk.core.common
 
-import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
 import java.util.Locale
+import kotlin.test.Test
 
 @RunWith(Parameterized::class)
 class LocaleTest(

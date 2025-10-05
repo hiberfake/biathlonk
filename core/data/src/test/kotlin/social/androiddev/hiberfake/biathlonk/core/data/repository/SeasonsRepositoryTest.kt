@@ -1,84 +1,61 @@
 package social.androiddev.hiberfake.biathlonk.core.data.repository
 
+import app.cash.turbine.test
 import com.skydoves.sandwich.ApiResponse
 import io.mockk.coEvery
 import io.mockk.mockk
-import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.TestScope
-import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
-import org.junit.Test
-import social.androiddev.hiberfake.biathlonk.core.model.Season
+import org.junit.Rule
 import social.androiddev.hiberfake.biathlonk.core.network.BiathlonResultsRemoteDataSource
-import social.androiddev.hiberfake.biathlonk.core.network.model.NetworkSeason
+import social.androiddev.hiberfake.biathlonk.core.testing.MainDispatcherRule
+import social.androiddev.hiberfake.biathlonk.core.testing.networkSeasonsTestData
+import social.androiddev.hiberfake.biathlonk.core.testing.seasonsTestData
 import java.io.IOException
+import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class SeasonsRepositoryTest {
+    @get:Rule
+    val mainDispatcherRule = MainDispatcherRule()
+
     val mockRemoteDataSource = mockk<BiathlonResultsRemoteDataSource>()
-    val testScope = TestScope(UnconfinedTestDispatcher())
 
     val repository = SeasonsRepository(
+        externalScope = TestScope(mainDispatcherRule.testDispatcher),
         biathlonResultsRemoteDataSource = mockRemoteDataSource,
-        externalScope = testScope,
     )
 
     @Test
-    fun getSeasons_returnsListOfSeasons() = runTest {
-        val networkSeasons = listOf(
-            NetworkSeason(
-                id = "2526",
-                description = "2025/2026",
-                isCurrentlyScheduled = true,
-            ),
-            NetworkSeason(
-                id = "2425",
-                description = "2024/2025",
-                hasCurrentResults = true,
-            ),
-        )
-        val seasons = persistentListOf(
-            Season(
-                id = "2526",
-                description = "2025/2026",
-                isCurrentlyScheduled = true,
-            ),
-            Season(
-                id = "2425",
-                description = "2024/2025",
-                hasCurrentResults = true,
-            ),
-        )
+    fun getSeasonsStream_emitsListOfSeasons() = runTest {
+        coEvery { mockRemoteDataSource.getSeasons() } returns ApiResponse.of { networkSeasonsTestData }
 
-        coEvery { mockRemoteDataSource.getSeasons() } returns ApiResponse.of { networkSeasons }
-
-        val flow = repository.getSeasonsStream()
-
-        assertEquals(seasons, flow.first())
+        repository.getSeasonsStream().test {
+            assertEquals(seasonsTestData, awaitItem())
+            awaitComplete()
+        }
     }
 
     @Test
-    fun getSeasons_returnsEmptyList_onError() = runTest {
-        val seasons = persistentListOf<Season>()
-
+    fun getSeasonsStream_emitsEmptyList_onError() = runTest {
         coEvery { mockRemoteDataSource.getSeasons() } returns ApiResponse.Failure.Error("")
 
-        val flow = repository.getSeasonsStream()
-
-        assertEquals(seasons, flow.first())
+        repository.getSeasonsStream().test {
+            assertTrue { awaitItem().isEmpty() }
+            awaitComplete()
+        }
     }
 
     @Test
-    fun getSeasons_returnsEmptyList_onException() = runTest {
-        val seasons = persistentListOf<Season>()
-
+    fun getSeasonsStream_emitsEmptyList_onException() = runTest {
         coEvery { mockRemoteDataSource.getSeasons() } returns ApiResponse.exception(IOException())
 
-        val flow = repository.getSeasonsStream()
-
-        assertEquals(seasons, flow.first())
+        repository.getSeasonsStream().test {
+            assertTrue { awaitItem().isEmpty() }
+            awaitComplete()
+        }
     }
 }

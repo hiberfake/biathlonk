@@ -9,44 +9,36 @@ import com.skydoves.sandwich.isSuccess
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
-import org.junit.Test
+import org.junit.Rule
 import social.androiddev.hiberfake.biathlonk.core.network.api.BiathlonResultsApi
-import social.androiddev.hiberfake.biathlonk.core.network.model.NetworkSeason
+import social.androiddev.hiberfake.biathlonk.core.testing.MainDispatcherRule
+import social.androiddev.hiberfake.biathlonk.core.testing.networkSeasonsTestData
 import java.io.IOException
+import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class BiathlonResultsRemoteDataSourceTest {
+    @get:Rule
+    val mainDispatcherRule = MainDispatcherRule()
+
     val mockApi = mockk<BiathlonResultsApi>()
 
     val dataSource = BiathlonResultsRemoteDataSource(
-        dispatcher = UnconfinedTestDispatcher(),
+        dispatcher = mainDispatcherRule.testDispatcher,
         biathlonResultsApi = mockApi,
     )
 
     @Test
     fun getSeasons_returnsSuccess() = runTest {
-        val seasons = listOf(
-            NetworkSeason(
-                id = "2526",
-                description = "2025/2026",
-                isCurrentlyScheduled = true,
-            ),
-            NetworkSeason(
-                id = "2425",
-                description = "2024/2025",
-                hasCurrentResults = true,
-            ),
-        )
-
-        coEvery { mockApi.getSeasons() } returns ApiResponse.of { seasons }
+        coEvery { mockApi.getSeasons() } returns ApiResponse.of { networkSeasonsTestData }
 
         val response = dataSource.getSeasons()
 
-        assert(response.isSuccess)
-        assertEquals(seasons, response.getOrThrow())
+        assertTrue { response.isSuccess }
+        assertEquals(networkSeasonsTestData, response.getOrThrow())
     }
 
     @Test
@@ -55,8 +47,8 @@ class BiathlonResultsRemoteDataSourceTest {
 
         val response = dataSource.getSeasons()
 
-        assert(response.isFailure)
-        assert(response.isError)
+        assertTrue { response.isFailure }
+        assertTrue { response.isError }
     }
 
     @Test
@@ -65,7 +57,7 @@ class BiathlonResultsRemoteDataSourceTest {
 
         val response = dataSource.getSeasons()
 
-        assert(response.isFailure)
-        assert(response.isException)
+        assertTrue { response.isFailure }
+        assertTrue { response.isException }
     }
 }
