@@ -14,7 +14,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -54,7 +53,6 @@ import social.androiddev.hiberfake.biathlonk.core.ui.icons.filled.Settings
 import social.androiddev.hiberfake.biathlonk.core.ui.layout.plus
 import social.androiddev.hiberfake.biathlonk.core.ui.R as uiR
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun ScheduleRoute(
     onNavigateToSettings: () -> Unit,
@@ -73,7 +71,6 @@ internal fun ScheduleRoute(
     )
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun ScheduleScreen(
     eventsState: UiState<ImmutableList<Event>>,
@@ -227,7 +224,6 @@ private fun LazyListScope.races(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @PreviewLightDark
 @Composable
 private fun ScheduleScreenPreview(
