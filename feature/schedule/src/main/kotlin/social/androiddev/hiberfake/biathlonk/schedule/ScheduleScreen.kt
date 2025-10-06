@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.requiredHeightIn
 import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
@@ -19,14 +20,16 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SheetState
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
@@ -40,7 +43,7 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import social.androiddev.hiberfake.biathlonk.core.designsystem.theme.BiathlonTheme
 import social.androiddev.hiberfake.biathlonk.core.model.Event
 import social.androiddev.hiberfake.biathlonk.core.model.Race
@@ -78,13 +81,12 @@ private fun ScheduleScreen(
     onEventClick: (String) -> Unit,
     onSettingsClick: () -> Unit,
     modifier: Modifier = Modifier,
+    sheetState: SheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
 ) {
     // UI is ready for use.
     ReportDrawnWhen { eventsState !is UiState.Loading }
 
     val layoutDirection = LocalLayoutDirection.current
-    val scope = rememberCoroutineScope()
-    val sheetState = rememberModalBottomSheetState()
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
     val dividerPadding = remember {
         with(ListItemDefaults) {
@@ -94,6 +96,7 @@ private fun ScheduleScreen(
             )
         }
     }
+    var showBottomSheet by rememberSaveable { mutableStateOf(sheetState.isVisible) }
 
     Scaffold(
         modifier = modifier.nestedScroll(connection = scrollBehavior.nestedScrollConnection),
@@ -121,20 +124,20 @@ private fun ScheduleScreen(
                 state = eventsState,
                 onClick = { id ->
                     onEventClick(id)
-                    scope.launch { sheetState.show() }
+                    showBottomSheet = true
                 },
                 dividerModifier = Modifier.padding(dividerPadding),
             )
         }
     }
 
-    if (sheetState.isVisible) {
+    if (showBottomSheet) {
         ModalBottomSheet(
-            onDismissRequest = { scope.launch { sheetState.hide() } },
+            onDismissRequest = { showBottomSheet = false },
             sheetState = sheetState,
         ) {
             LazyColumn(
-//                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth(),
                 contentPadding = PaddingValues(bottom = 8.dp),
             ) {
                 races(
@@ -196,7 +199,7 @@ private fun LazyListScope.races(
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .fillParentMaxHeight(fraction = .5f),
+                        .requiredHeightIn(min = ListItemDefaults.TwoLinesListItemContainerHeight),
                     contentAlignment = Alignment.Center,
                 ) {
                     CircularProgressIndicator()
@@ -227,28 +230,46 @@ private fun LazyListScope.races(
 @PreviewLightDark
 @Composable
 private fun ScheduleScreenPreview(
-    @PreviewParameter(SchedulePreviewParameterProvider::class)
-    states: Pair<UiState<ImmutableList<Event>>, UiState<ImmutableList<Race>>>,
+    @PreviewParameter(EventsStatePreviewParameterProvider::class)
+    eventsState: UiState<ImmutableList<Event>>,
 ) = BiathlonTheme {
-    val (eventsState, racesState) = states
-    val sheetState = rememberModalBottomSheetState()
-
-    LaunchedEffect(Unit) {
-        sheetState.show()
-    }
-
     ScheduleScreen(
         eventsState = eventsState,
-        racesState = racesState,
+        racesState = UiState.Loading,
         onEventClick = {},
         onSettingsClick = {},
     )
 }
 
-private class SchedulePreviewParameterProvider :
-    PreviewParameterProvider<Pair<UiState<ImmutableList<Event>>, UiState<ImmutableList<Race>>>> {
+@PreviewLightDark
+@Composable
+private fun ScheduleScreenWithModalBottomSheetPreview(
+    @PreviewParameter(RacesStatePreviewParameterProvider::class)
+    racesState: UiState<ImmutableList<Race>>,
+) = BiathlonTheme {
+    val sheetState = rememberModalBottomSheetState()
+
+    runBlocking { sheetState.show() }
+
+    ScheduleScreen(
+        eventsState = UiState.Loading,
+        racesState = racesState,
+        onEventClick = {},
+        onSettingsClick = {},
+        sheetState = sheetState,
+    )
+}
+
+private class EventsStatePreviewParameterProvider : PreviewParameterProvider<UiState<ImmutableList<Event>>> {
     override val values = sequenceOf(
-        UiState.Loading to UiState.Loading,
-        UiState.Success(persistentListOf(Event.preview)) to UiState.Success(persistentListOf(Race.preview)),
+        UiState.Loading,
+        UiState.Success(persistentListOf(Event.preview)),
+    )
+}
+
+private class RacesStatePreviewParameterProvider : PreviewParameterProvider<UiState<ImmutableList<Race>>> {
+    override val values = sequenceOf(
+        UiState.Loading,
+        UiState.Success(persistentListOf(Race.preview)),
     )
 }
