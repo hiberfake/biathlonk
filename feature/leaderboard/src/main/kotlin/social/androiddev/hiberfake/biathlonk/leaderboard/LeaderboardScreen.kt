@@ -24,15 +24,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.util.fastForEachIndexed
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.collections.immutable.ImmutableList
@@ -43,6 +46,7 @@ import social.androiddev.hiberfake.biathlonk.core.model.Category
 import social.androiddev.hiberfake.biathlonk.core.model.CupResults
 import social.androiddev.hiberfake.biathlonk.core.ui.AthleteItem
 import social.androiddev.hiberfake.biathlonk.core.ui.ListItemDefaults
+import social.androiddev.hiberfake.biathlonk.core.ui.R
 import social.androiddev.hiberfake.biathlonk.core.ui.UiState
 import social.androiddev.hiberfake.biathlonk.core.ui.layout.plus
 
@@ -69,7 +73,7 @@ private fun LeaderboardScreen(
 
     val layoutDirection = LocalLayoutDirection.current
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
-    var selectedIndex by remember { mutableIntStateOf(0) }
+    var selectedIndex by rememberSaveable { mutableIntStateOf(0) }
     val categories = remember { Category.entries }
     val dividerPadding = remember {
         with(ListItemDefaults) {
@@ -87,7 +91,7 @@ private fun LeaderboardScreen(
             CenterAlignedTopAppBar(
                 title = {
                     SingleChoiceSegmentedButtonRow {
-                        categories.forEachIndexed { index, category ->
+                        categories.fastForEachIndexed { index, category ->
                             SegmentedButton(
                                 selected = index == selectedIndex,
                                 onClick = { selectedIndex = index },
@@ -98,8 +102,8 @@ private fun LeaderboardScreen(
                             ) {
                                 Text(
                                     text = when (category) {
-                                        Category.SINGLE_WOMEN -> "Frauen"
-                                        Category.SINGLE_MEN -> "Männer"
+                                        Category.SINGLE_WOMEN -> stringResource(R.string.category_women)
+                                        Category.SINGLE_MEN -> stringResource(R.string.category_men)
                                     },
                                 )
                             }

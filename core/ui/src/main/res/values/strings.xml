@@ -1,4 +1,7 @@
 <resources>
     <string name="action_back">Zurück</string>
     <string name="action_settings">Einstellungen</string>
+
+    <string name="category_women">Frauen</string>
+    <string name="category_men">Männer</string>
 </resources>
