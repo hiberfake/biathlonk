@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredHeightIn
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.Badge
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -42,21 +43,6 @@ import social.androiddev.hiberfake.biathlonk.core.model.Athlete
 import social.androiddev.hiberfake.biathlonk.core.model.Event
 import social.androiddev.hiberfake.biathlonk.core.model.Race
 import social.androiddev.hiberfake.biathlonk.core.model.formatDateRange
-
-object ListItemDefaults {
-    val OneLineListItemContainerHeight = 56.dp
-    val TwoLinesListItemContainerHeight = 72.dp
-
-    val ContainerPadding = PaddingValues(
-        horizontal = 16.dp,
-        vertical = 8.dp,
-    )
-
-    val Space = 16.dp
-
-    val LeadingAvatarSize = 40.dp
-    val LeadingAvatarShape: Shape = CircleShape
-}
 
 @Composable
 fun EventItem(
@@ -170,18 +156,31 @@ fun AthleteItem(
             Text(
                 text = remember { "${athlete.iocCountryCode.toLocale().toEmoji()} ${athlete.iocCountryCode}" },
                 modifier = Modifier.semantics {
-                    contentDescription = athlete.iocCountryCode.toLocale().toEmoji()
+                    contentDescription = athlete.iocCountryCode.toLocale().displayCountry
                 },
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 style = MaterialTheme.typography.bodyMedium,
             )
         }
-        Text(
-            text = remember { athlete.score.format() },
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-            style = MaterialTheme.typography.labelSmall,
-        )
+        Badge(containerColor = MaterialTheme.colorScheme.secondaryContainer) {
+            Text(text = remember { athlete.score.format() })
+        }
     }
+}
+
+object ListItemDefaults {
+    val OneLineListItemContainerHeight = 56.dp
+    val TwoLinesListItemContainerHeight = 72.dp
+
+    val ContainerPadding = PaddingValues(
+        horizontal = 16.dp,
+        vertical = 8.dp,
+    )
+
+    val Space = 16.dp
+
+    val LeadingAvatarSize = 40.dp
+    val LeadingAvatarShape: Shape = CircleShape
 }
 
 @PreviewLightDark
