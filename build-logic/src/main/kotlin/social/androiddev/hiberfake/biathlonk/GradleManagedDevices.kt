@@ -7,10 +7,10 @@ import org.gradle.kotlin.dsl.create
 internal fun configureGradleManagedDevices(extension: CommonExtension<*, *, *, *, *, *>) {
     extension.testOptions {
         managedDevices {
-            allDevices.create<ManagedVirtualDevice>(pixel6Api36.name) {
-                device = pixel6Api36.device
-                apiLevel = pixel6Api36.apiLevel
-                systemImageSource = pixel6Api36.systemImageSource
+            allDevices.create<ManagedVirtualDevice>(pixel6Api35.name) {
+                device = pixel6Api35.device
+                apiLevel = pixel6Api35.apiLevel
+                systemImageSource = pixel6Api35.systemImageSource
             }
         }
     }
@@ -28,8 +28,8 @@ data class GradleManagedDevice(
     }
 }
 
-val pixel6Api36 = GradleManagedDevice(
+val pixel6Api35 = GradleManagedDevice(
     device = "Pixel 6",
-    apiLevel = 36,
+    apiLevel = 35,
     systemImageSource = "aosp-atd",
 )
