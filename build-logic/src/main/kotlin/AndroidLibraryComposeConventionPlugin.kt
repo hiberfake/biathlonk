@@ -7,16 +7,14 @@ import social.androiddev.hiberfake.biathlonk.libs
 
 @Suppress("unused")
 class AndroidLibraryComposeConventionPlugin : Plugin<Project> {
-    override fun apply(target: Project) {
-        with(target) {
-            with(pluginManager) {
-                apply(libs.plugins.kotlin.compose.get().pluginId)
-                apply(libs.plugins.biathlonk.android.library.asProvider().get().pluginId)
-            }
+    override fun apply(target: Project) = with(target) {
+        with(pluginManager) {
+            apply(libs.plugins.kotlin.compose.get().pluginId)
+            apply(libs.plugins.biathlonk.android.library.asProvider().get().pluginId)
+        }
 
-            extensions.configure<LibraryExtension> {
-                configureCompose(this)
-            }
+        extensions.configure<LibraryExtension> {
+            configureCompose(this)
         }
     }
 }

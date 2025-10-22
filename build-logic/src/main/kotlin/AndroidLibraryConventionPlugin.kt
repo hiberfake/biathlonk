@@ -16,45 +16,43 @@ import social.androiddev.hiberfake.biathlonk.libs
 
 @Suppress("unused")
 class AndroidLibraryConventionPlugin : Plugin<Project> {
-    override fun apply(target: Project) {
-        with(target) {
-            with(pluginManager) {
-                apply(libs.plugins.android.library.get().pluginId)
-                apply(libs.plugins.kotlin.android.get().pluginId)
+    override fun apply(target: Project) = with(target) {
+        with(pluginManager) {
+            apply(libs.plugins.android.library.get().pluginId)
+            apply(libs.plugins.kotlin.android.get().pluginId)
+        }
+
+        extensions.configure<KotlinAndroidProjectExtension> {
+            configureKotlin(this)
+        }
+
+        extensions.configure<LibraryExtension> {
+            configureAndroid(this)
+            configureGradleManagedDevices(this)
+
+            defaultConfig {
+                testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+                testOptions.targetSdk = libs.versions.targetSdk.get().toInt()
             }
+        }
 
-            extensions.configure<KotlinAndroidProjectExtension> {
-                configureKotlin(this)
-            }
+        extensions.configure<LibraryAndroidComponentsExtension> {
+            disableUnnecessaryAndroidTests(this)
+        }
 
-            extensions.configure<LibraryExtension> {
-                configureAndroid(this)
-                configureGradleManagedDevices(this)
+        extensions.configure<TestedExtension> {
+            configureUnitTests(this)
+        }
 
-                defaultConfig {
-                    testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-                    testOptions.targetSdk = libs.versions.targetSdk.get().toInt()
-                }
-            }
+        dependencies {
+            "implementation"(libs.androidx.annotation)
+            "implementation"(libs.androidx.core)
 
-            extensions.configure<LibraryAndroidComponentsExtension> {
-                disableUnnecessaryAndroidTests(this)
-            }
+            "testImplementation"(kotlin("test"))
+            "androidTestImplementation"(kotlin("test"))
 
-            extensions.configure<TestedExtension> {
-                configureUnitTests(this)
-            }
-
-            dependencies {
-                "implementation"(libs.androidx.annotation)
-                "implementation"(libs.androidx.core)
-
-                "testImplementation"(kotlin("test"))
-                "androidTestImplementation"(kotlin("test"))
-
-                "testImplementation"(project(":core:testing"))
-                "androidTestImplementation"(project(":core:testing"))
-            }
+            "testImplementation"(project(":core:testing"))
+            "androidTestImplementation"(project(":core:testing"))
         }
     }
 }

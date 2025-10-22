@@ -13,49 +13,47 @@ import social.androiddev.hiberfake.biathlonk.libs
 
 @Suppress("unused")
 class AndroidApplicationConventionPlugin : Plugin<Project> {
-    override fun apply(target: Project) {
-        with(target) {
-            with(pluginManager) {
-                apply(libs.plugins.android.application.get().pluginId)
-                apply(libs.plugins.kotlin.android.get().pluginId)
-                apply(libs.plugins.kotlin.compose.get().pluginId)
-                apply(libs.plugins.kotlin.serialization.get().pluginId)
-                apply(libs.plugins.biathlonk.android.hilt.get().pluginId)
+    override fun apply(target: Project) = with(target) {
+        with(pluginManager) {
+            apply(libs.plugins.android.application.get().pluginId)
+            apply(libs.plugins.kotlin.android.get().pluginId)
+            apply(libs.plugins.kotlin.compose.get().pluginId)
+            apply(libs.plugins.kotlin.serialization.get().pluginId)
+            apply(libs.plugins.biathlonk.android.hilt.get().pluginId)
+        }
+
+        extensions.configure<KotlinAndroidProjectExtension> {
+            configureKotlin(this)
+        }
+
+        extensions.configure<ApplicationExtension> {
+            configureAndroid(this)
+            configureCompose(this)
+            configureGradleManagedDevices(this)
+
+            defaultConfig {
+                targetSdk = libs.versions.targetSdk.get().toInt()
+                testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
             }
+        }
 
-            extensions.configure<KotlinAndroidProjectExtension> {
-                configureKotlin(this)
-            }
+        dependencies {
+            "implementation"(libs.androidx.activity.compose)
 
-            extensions.configure<ApplicationExtension> {
-                configureAndroid(this)
-                configureCompose(this)
-                configureGradleManagedDevices(this)
+            "implementation"(libs.androidx.lifecycle.runtimeCompose)
+            "implementation"(libs.androidx.lifecycle.viewmodelCompose)
 
-                defaultConfig {
-                    targetSdk = libs.versions.targetSdk.get().toInt()
-                    testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-                }
-            }
+            "implementation"(libs.androidx.navigation.compose)
 
-            dependencies {
-                "implementation"(libs.androidx.activity.compose)
+            "implementation"(libs.androidx.hilt.navigationCompose)
 
-                "implementation"(libs.androidx.lifecycle.runtimeCompose)
-                "implementation"(libs.androidx.lifecycle.viewmodelCompose)
+            "testImplementation"(kotlin("test"))
+            "androidTestImplementation"(kotlin("test"))
 
-                "implementation"(libs.androidx.navigation.compose)
+            "testImplementation"(project(":core:testing"))
+            "androidTestImplementation"(project(":core:testing"))
 
-                "implementation"(libs.androidx.hilt.navigationCompose)
-
-                "testImplementation"(kotlin("test"))
-                "androidTestImplementation"(kotlin("test"))
-
-                "testImplementation"(project(":core:testing"))
-                "androidTestImplementation"(project(":core:testing"))
-
-                "androidTestImplementation"(libs.androidx.test.uiautomator)
-            }
+            "androidTestImplementation"(libs.androidx.test.uiautomator)
         }
     }
 }

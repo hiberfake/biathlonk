@@ -7,22 +7,20 @@ import social.androiddev.hiberfake.biathlonk.libs
 
 @Suppress("unused")
 class AndroidHiltConventionPlugin : Plugin<Project> {
-    override fun apply(target: Project) {
-        with(target) {
-            with(pluginManager) {
-                apply(libs.plugins.ksp.get().pluginId)
-                apply(libs.plugins.hilt.get().pluginId)
-            }
+    override fun apply(target: Project) = with(target) {
+        with(pluginManager) {
+            apply(libs.plugins.ksp.get().pluginId)
+            apply(libs.plugins.hilt.get().pluginId)
+        }
 
-            dependencies {
-                "implementation"(libs.hilt.android)
-                "ksp"(libs.hilt.compiler)
-                "kspAndroidTest"(libs.hilt.compiler)
-            }
+        dependencies {
+            "implementation"(libs.hilt.android)
+            "ksp"(libs.hilt.compiler)
+            "kspAndroidTest"(libs.hilt.compiler)
+        }
 
-            extensions.configure<HiltExtension> {
-                enableAggregatingTask = true
-            }
+        extensions.configure<HiltExtension> {
+            enableAggregatingTask = true
         }
     }
 }

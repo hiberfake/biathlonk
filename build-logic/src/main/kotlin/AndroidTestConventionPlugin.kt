@@ -10,25 +10,23 @@ import social.androiddev.hiberfake.biathlonk.libs
 
 @Suppress("unused")
 class AndroidTestConventionPlugin : Plugin<Project> {
-    override fun apply(target: Project) {
-        with(target) {
-            with(pluginManager) {
-                apply(libs.plugins.android.test.get().pluginId)
-                apply(libs.plugins.kotlin.android.get().pluginId)
-            }
+    override fun apply(target: Project) = with(target) {
+        with(pluginManager) {
+            apply(libs.plugins.android.test.get().pluginId)
+            apply(libs.plugins.kotlin.android.get().pluginId)
+        }
 
-            extensions.configure<KotlinAndroidProjectExtension> {
-                configureKotlin(this)
-            }
+        extensions.configure<KotlinAndroidProjectExtension> {
+            configureKotlin(this)
+        }
 
-            extensions.configure<TestExtension> {
-                configureAndroid(this)
-                configureGradleManagedDevices(this)
+        extensions.configure<TestExtension> {
+            configureAndroid(this)
+            configureGradleManagedDevices(this)
 
-                defaultConfig {
-                    targetSdk = libs.versions.targetSdk.get().toInt()
-                    testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-                }
+            defaultConfig {
+                targetSdk = libs.versions.targetSdk.get().toInt()
+                testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
             }
         }
     }
