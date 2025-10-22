@@ -6,6 +6,7 @@ import org.gradle.api.provider.Provider
 import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.dependencies
 import org.jetbrains.kotlin.compose.compiler.gradle.ComposeCompilerGradlePluginExtension
+import org.jetbrains.kotlin.gradle.dsl.KotlinAndroidExtension
 
 internal fun Project.configureCompose(extension: CommonExtension<*, *, *, *, *, *>) {
     extension.apply {
@@ -29,6 +30,14 @@ internal fun Project.configureCompose(extension: CommonExtension<*, *, *, *, *, 
             "androidTestImplementation"(libs.androidx.compose.ui.testManifest)
 
             "lintChecks"(libs.compose.lints)
+        }
+    }
+
+    extensions.configure<KotlinAndroidExtension> {
+        compilerOptions {
+            freeCompilerArgs.apply {
+                add("-opt-in=androidx.compose.material3.ExperimentalMaterial3Api")
+            }
         }
     }
 

@@ -14,7 +14,6 @@ internal fun Project.configureKotlin(extension: KotlinAndroidProjectExtension) {
 
                 add("-opt-in=kotlin.time.ExperimentalTime")
                 add("-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi")
-                add("-opt-in=androidx.compose.material3.ExperimentalMaterial3Api")
             }
         }
     }
