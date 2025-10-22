@@ -19,6 +19,8 @@ plugins {
 
     // Third-party
     alias(libs.plugins.aboutlibraries) apply false
+    alias(libs.plugins.aboutlibraries.android) apply false
+
     alias(libs.plugins.spotless)
 
     alias(libs.plugins.moduleGraph)

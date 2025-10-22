@@ -1,10 +1,9 @@
-import com.mikepenz.aboutlibraries.plugin.DuplicateMode
-
 plugins {
     alias(libs.plugins.biathlonk.android.application)
     alias(libs.plugins.biathlonk.spotless)
     alias(libs.plugins.androidx.baselineprofile)
     alias(libs.plugins.aboutlibraries)
+    alias(libs.plugins.aboutlibraries.android)
 }
 
 android {
@@ -68,13 +67,15 @@ dependencies {
 //    baselineProfile(projects.benchmark)
 }
 
-aboutLibraries {
-    collect.filterVariants = setOf("debug", "release")
-    library.duplicationMode = DuplicateMode.MERGE
-}
-
 baselineProfile {
     dexLayoutOptimization = true
     mergeIntoMain = true
     saveInSrc = true
+}
+
+aboutLibraries {
+    collect.filterVariants = setOf(
+        "debug",
+        "release",
+    )
 }

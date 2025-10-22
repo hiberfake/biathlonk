@@ -18,7 +18,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import com.mikepenz.aboutlibraries.ui.compose.LibraryDefaults
-import com.mikepenz.aboutlibraries.ui.compose.android.rememberLibraries
+import com.mikepenz.aboutlibraries.ui.compose.android.produceLibraries
 import com.mikepenz.aboutlibraries.ui.compose.m3.LibrariesContainer
 import social.androiddev.hiberfake.biathlonk.core.designsystem.theme.BiathlonTheme
 import social.androiddev.hiberfake.biathlonk.core.ui.ListItemDefaults
@@ -45,7 +45,7 @@ private fun LibrariesScreen(
     modifier: Modifier = Modifier,
 ) {
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
-    val libraries by rememberLibraries()
+    val libraries by produceLibraries()
 
     Scaffold(
         modifier = modifier.nestedScroll(connection = scrollBehavior.nestedScrollConnection),
@@ -73,7 +73,6 @@ private fun LibrariesScreen(
             padding = LibraryDefaults.libraryPadding(
                 contentPadding = ListItemDefaults.ContainerPadding,
                 licensePadding = LibraryDefaults.chipPadding(
-//                    containerPadding = PaddingValues(top = 4.dp),
                     contentPadding = PaddingValues(horizontal = 4.dp),
                 ),
                 verticalPadding = 0.dp,

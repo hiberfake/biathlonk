@@ -12,7 +12,7 @@ ksp = "2.2.20-2.0.4"
 
 ktlint = "1.7.1"
 
-aboutlibraries = "12.2.4"
+aboutlibraries = "13.1.0"
 android-desugar = "2.1.5"
 androidx-activity = "1.11.0"
 androidx-annotation = "1.9.1"
@@ -166,6 +166,7 @@ spotless-plugin = { group = "com.diffplug.spotless", name = "spotless-plugin-gra
 
 [plugins]
 aboutlibraries = { id = "com.mikepenz.aboutlibraries.plugin", version.ref = "aboutlibraries" }
+aboutlibraries-android = { id = "com.mikepenz.aboutlibraries.plugin.android", version.ref = "aboutlibraries" }
 
 android-application = { id = "com.android.application", version.ref = "agp" }
 android-library = { id = "com.android.library", version.ref = "agp" }
