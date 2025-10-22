@@ -45,7 +45,7 @@ import social.androiddev.hiberfake.biathlonk.core.model.Athlete
 import social.androiddev.hiberfake.biathlonk.core.model.Category
 import social.androiddev.hiberfake.biathlonk.core.model.CupResults
 import social.androiddev.hiberfake.biathlonk.core.ui.AthleteItem
-import social.androiddev.hiberfake.biathlonk.core.ui.ListItemDefaults
+import social.androiddev.hiberfake.biathlonk.core.ui.BiathlonListItemDefaults
 import social.androiddev.hiberfake.biathlonk.core.ui.R
 import social.androiddev.hiberfake.biathlonk.core.ui.UiState
 import social.androiddev.hiberfake.biathlonk.core.ui.layout.plus
@@ -76,7 +76,7 @@ private fun LeaderboardScreen(
     var selectedIndex by rememberSaveable { mutableIntStateOf(0) }
     val categories = remember { Category.entries }
     val dividerPadding = remember {
-        with(ListItemDefaults) {
+        with(BiathlonListItemDefaults) {
             PaddingValues(
                 start = ContainerPadding.calculateStartPadding(layoutDirection)
                     .plus(LeadingAvatarSize)

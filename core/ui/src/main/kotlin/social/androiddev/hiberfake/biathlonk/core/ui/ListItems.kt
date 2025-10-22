@@ -56,9 +56,9 @@ fun EventItem(
         modifier = modifier
             .semantics(mergeDescendants = true) {}
             .fillMaxWidth()
-            .requiredHeightIn(min = ListItemDefaults.TwoLinesListItemContainerHeight)
+            .requiredHeightIn(min = BiathlonListItemDefaults.TwoLinesListItemContainerHeight)
             .clickable(onClick = onClick)
-            .padding(ListItemDefaults.ContainerPadding),
+            .padding(BiathlonListItemDefaults.ContainerPadding),
         verticalArrangement = Arrangement.Center,
     ) {
         Text(
@@ -95,8 +95,8 @@ fun RaceItem(
         modifier = modifier
             .semantics(mergeDescendants = true) {}
             .fillMaxWidth()
-            .requiredHeightIn(min = ListItemDefaults.TwoLinesListItemContainerHeight)
-            .padding(ListItemDefaults.ContainerPadding),
+            .requiredHeightIn(min = BiathlonListItemDefaults.TwoLinesListItemContainerHeight)
+            .padding(BiathlonListItemDefaults.ContainerPadding),
         verticalArrangement = Arrangement.Center,
     ) {
         Text(
@@ -126,16 +126,16 @@ fun AthleteItem(
         modifier = modifier
             .semantics(mergeDescendants = true) {}
             .fillMaxWidth()
-            .requiredHeightIn(min = ListItemDefaults.TwoLinesListItemContainerHeight)
-            .padding(ListItemDefaults.ContainerPadding),
-        horizontalArrangement = Arrangement.spacedBy(ListItemDefaults.Space),
+            .requiredHeightIn(min = BiathlonListItemDefaults.TwoLinesListItemContainerHeight)
+            .padding(BiathlonListItemDefaults.ContainerPadding),
+        horizontalArrangement = Arrangement.spacedBy(BiathlonListItemDefaults.Space),
         verticalAlignment = Alignment.Companion.CenterVertically,
     ) {
         Box(
             modifier = Modifier
-                .size(ListItemDefaults.LeadingAvatarSize)
-                .clip(ListItemDefaults.LeadingAvatarShape)
-                .background(color = MaterialTheme.colorScheme.surfaceContainer),
+                .size(BiathlonListItemDefaults.LeadingAvatarSize)
+                .clip(BiathlonListItemDefaults.LeadingAvatarShape)
+                .background(color = MaterialTheme.colorScheme.surfaceContainerLow),
         ) {
             AsyncImage(
                 model = athlete.avatarUrl,
@@ -168,7 +168,7 @@ fun AthleteItem(
     }
 }
 
-object ListItemDefaults {
+object BiathlonListItemDefaults {
     val OneLineListItemContainerHeight = 56.dp
     val TwoLinesListItemContainerHeight = 72.dp
 

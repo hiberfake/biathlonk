@@ -47,8 +47,8 @@ import kotlinx.coroutines.runBlocking
 import social.androiddev.hiberfake.biathlonk.core.designsystem.theme.BiathlonTheme
 import social.androiddev.hiberfake.biathlonk.core.model.Event
 import social.androiddev.hiberfake.biathlonk.core.model.Race
+import social.androiddev.hiberfake.biathlonk.core.ui.BiathlonListItemDefaults
 import social.androiddev.hiberfake.biathlonk.core.ui.EventItem
-import social.androiddev.hiberfake.biathlonk.core.ui.ListItemDefaults
 import social.androiddev.hiberfake.biathlonk.core.ui.RaceItem
 import social.androiddev.hiberfake.biathlonk.core.ui.UiState
 import social.androiddev.hiberfake.biathlonk.core.ui.icons.Icons
@@ -89,7 +89,7 @@ private fun ScheduleScreen(
     val layoutDirection = LocalLayoutDirection.current
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
     val dividerPadding = remember {
-        with(ListItemDefaults) {
+        with(BiathlonListItemDefaults) {
             PaddingValues(
                 start = ContainerPadding.calculateStartPadding(layoutDirection),
                 end = ContainerPadding.calculateEndPadding(layoutDirection),
@@ -199,7 +199,7 @@ private fun LazyListScope.races(
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .requiredHeightIn(min = ListItemDefaults.TwoLinesListItemContainerHeight),
+                        .requiredHeightIn(min = BiathlonListItemDefaults.TwoLinesListItemContainerHeight),
                     contentAlignment = Alignment.Center,
                 ) {
                     CircularProgressIndicator()

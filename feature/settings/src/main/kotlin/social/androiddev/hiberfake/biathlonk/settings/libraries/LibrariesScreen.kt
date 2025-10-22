@@ -21,7 +21,7 @@ import com.mikepenz.aboutlibraries.ui.compose.LibraryDefaults
 import com.mikepenz.aboutlibraries.ui.compose.android.produceLibraries
 import com.mikepenz.aboutlibraries.ui.compose.m3.LibrariesContainer
 import social.androiddev.hiberfake.biathlonk.core.designsystem.theme.BiathlonTheme
-import social.androiddev.hiberfake.biathlonk.core.ui.ListItemDefaults
+import social.androiddev.hiberfake.biathlonk.core.ui.BiathlonListItemDefaults
 import social.androiddev.hiberfake.biathlonk.core.ui.icons.Icons
 import social.androiddev.hiberfake.biathlonk.core.ui.icons.filled.ArrowBack
 import social.androiddev.hiberfake.biathlonk.core.ui.layout.plus
@@ -71,7 +71,7 @@ private fun LibrariesScreen(
             libraries = libraries,
             contentPadding = contentPadding.plus(bottom = 8.dp),
             padding = LibraryDefaults.libraryPadding(
-                contentPadding = ListItemDefaults.ContainerPadding,
+                contentPadding = BiathlonListItemDefaults.ContainerPadding,
                 licensePadding = LibraryDefaults.chipPadding(
                     contentPadding = PaddingValues(horizontal = 4.dp),
                 ),

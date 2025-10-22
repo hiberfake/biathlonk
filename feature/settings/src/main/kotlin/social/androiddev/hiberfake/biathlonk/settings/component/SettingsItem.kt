@@ -16,7 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import social.androiddev.hiberfake.biathlonk.core.designsystem.theme.BiathlonTheme
-import social.androiddev.hiberfake.biathlonk.core.ui.ListItemDefaults
+import social.androiddev.hiberfake.biathlonk.core.ui.BiathlonListItemDefaults
 
 @Composable
 internal fun SettingsItem(
@@ -29,12 +29,12 @@ internal fun SettingsItem(
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .requiredHeightIn(min = ListItemDefaults.OneLineListItemContainerHeight)
+            .requiredHeightIn(min = BiathlonListItemDefaults.OneLineListItemContainerHeight)
             .clickable(
                 enabled = enabled,
                 onClick = onClick,
             )
-            .padding(ListItemDefaults.ContainerPadding),
+            .padding(BiathlonListItemDefaults.ContainerPadding),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Text(
