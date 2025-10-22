@@ -2,7 +2,10 @@ package social.androiddev.hiberfake.biathlonk.ui
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hasRoute
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -36,33 +39,34 @@ class BiathlonAppState(
     val navController: NavHostController,
     val startDestination: TopLevelDestination,
 ) {
-//    private var previousDestination by mutableStateOf<NavDestination?>(null)
-
+    private var previousDestination by mutableStateOf<NavDestination?>(null)
     val currentDestination: NavDestination?
         @Composable
-        get() = navController.currentBackStackEntryAsState().value?.destination
-//        get() {
-//            // Collect the current navigation back stack entry as a state.
-//            val currentBackStackEntry = navController.currentBackStackEntryAsState()
-//
-//            // Fallback to previousDestination if currentBackStackEntry is null.
-//            return currentBackStackEntry.value?.destination
-//                ?.also { previousDestination = it }
-//                ?: previousDestination
-//        }
+        get() {
+            // Collect the current navigation back stack entry as a state.
+            val currentBackStackEntry = navController.currentBackStackEntryAsState()
 
+            // Fallback to previousDestination if currentBackStackEntry is null.
+            return currentBackStackEntry.value?.destination
+                ?.also { previousDestination = it }
+                ?: previousDestination
+        }
+
+    private var previousTopLevelDestination by mutableStateOf<TopLevelDestination?>(null)
     val currentTopLevelDestination
         @Composable
-        get() = TopLevelDestination.entries.firstOrNull { destination ->
-            currentDestination.hasRouteInHierarchy(destination.baseRoute)
-        }
+        get() = TopLevelDestination.entries
+            // Find the top-level destination accommodating the current destination.
+            .find { destination -> currentDestination.hasRouteInHierarchy(destination.baseRoute) }
+            // Fallback to previousTopLevelDestination if currentDestination is null or not found.
+            ?.also { previousTopLevelDestination = it }
+            ?: previousTopLevelDestination
 
     /**
      * Navigates to the given top-level destination.
      *
      * This function handles different navigation scenarios:
-     *  - If the current destination is already the target top-level destination, it scrolls to the
-     *    top of the destination (TODO: Implement scroll-to-top behavior).
+     *
      *  - If the target top-level destination is already in the back stack, it pops the back stack
      *    back to that destination.
      *  - Otherwise, it navigates to the target top-level destination with appropriate [navOptions]
@@ -73,7 +77,7 @@ class BiathlonAppState(
     fun navigateToTopLevelDestination(destination: TopLevelDestination) {
         val currentDestination = navController.currentDestination
 
-        // Scroll to the top of the current top-level destination.
+        // TODO: Scroll to the top of the current top-level destination.
         if (currentDestination?.hasRoute(destination.route) == true) {
             /* no-op */
             return

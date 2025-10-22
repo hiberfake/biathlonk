@@ -10,10 +10,12 @@ import social.androiddev.hiberfake.biathlonk.leaderboard.LeaderboardRoute
 @Serializable
 data object LeaderboardRoute
 
-fun NavGraphBuilder.leaderboardScreen() {
+fun NavGraphBuilder.leaderboardScreen(nestedGraph: NavGraphBuilder.() -> Unit = {}) {
     composable<LeaderboardRoute> {
         LeaderboardRoute()
     }
+
+    nestedGraph()
 }
 
 fun NavController.navigateToLeaderboard(navOptions: NavOptions? = null) {
