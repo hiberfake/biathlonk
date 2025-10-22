@@ -37,6 +37,7 @@ internal fun Project.configureCompose(extension: CommonExtension<*, *, *, *, *, 
         compilerOptions {
             freeCompilerArgs.apply {
                 add("-opt-in=androidx.compose.material3.ExperimentalMaterial3Api")
+                add("-opt-in=androidx.compose.material3.ExperimentalMaterial3ExpressiveApi")
             }
         }
     }

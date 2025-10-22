@@ -1,24 +1,33 @@
 package social.androiddev.hiberfake.biathlonk.leaderboard
 
 import androidx.activity.compose.ReportDrawnWhen
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.calculateStartPadding
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ButtonGroupDefaults
 import androidx.compose.material3.CenterAlignedTopAppBar
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
+import androidx.compose.material3.LoadingIndicator
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SegmentedButton
-import androidx.compose.material3.SegmentedButtonDefaults
-import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.material3.Text
+import androidx.compose.material3.ToggleButton
+import androidx.compose.material3.ToggleButtonDefaults
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -31,6 +40,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.role
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
@@ -48,6 +60,9 @@ import social.androiddev.hiberfake.biathlonk.core.ui.AthleteItem
 import social.androiddev.hiberfake.biathlonk.core.ui.BiathlonListItemDefaults
 import social.androiddev.hiberfake.biathlonk.core.ui.R
 import social.androiddev.hiberfake.biathlonk.core.ui.UiState
+import social.androiddev.hiberfake.biathlonk.core.ui.icons.Icons
+import social.androiddev.hiberfake.biathlonk.core.ui.icons.filled.Female
+import social.androiddev.hiberfake.biathlonk.core.ui.icons.filled.Male
 import social.androiddev.hiberfake.biathlonk.core.ui.layout.plus
 
 @Composable
@@ -90,16 +105,34 @@ private fun LeaderboardScreen(
         topBar = {
             CenterAlignedTopAppBar(
                 title = {
-                    SingleChoiceSegmentedButtonRow {
+                    Row(
+                        modifier = Modifier
+                            .width(IntrinsicSize.Max)
+                            .padding(horizontal = 16.dp),
+                        horizontalArrangement = Arrangement.spacedBy(ButtonGroupDefaults.ConnectedSpaceBetween),
+                    ) {
                         categories.fastForEachIndexed { index, category ->
-                            SegmentedButton(
-                                selected = index == selectedIndex,
-                                onClick = { selectedIndex = index },
-                                shape = SegmentedButtonDefaults.itemShape(
-                                    index = index,
-                                    count = categories.size,
-                                ),
+                            ToggleButton(
+                                checked = index == selectedIndex,
+                                onCheckedChange = { selectedIndex = index },
+                                modifier = Modifier
+                                    .semantics { role = Role.RadioButton }
+                                    .defaultMinSize(minWidth = ButtonDefaults.MinWidth)
+                                    .weight(weight = 1f),
+                                shapes = when (index) {
+                                    0 -> ButtonGroupDefaults.connectedLeadingButtonShapes()
+                                    categories.lastIndex -> ButtonGroupDefaults.connectedTrailingButtonShapes()
+                                    else -> ButtonGroupDefaults.connectedMiddleButtonShapes()
+                                },
                             ) {
+                                Icon(
+                                    imageVector = when (category) {
+                                        Category.SINGLE_WOMEN -> Icons.Default.Female
+                                        Category.SINGLE_MEN -> Icons.Default.Male
+                                    },
+                                    contentDescription = null,
+                                )
+                                Spacer(Modifier.size(ToggleButtonDefaults.IconSpacing))
                                 Text(
                                     text = when (category) {
                                         Category.SINGLE_WOMEN -> stringResource(R.string.category_women)
@@ -140,7 +173,7 @@ private fun LazyListScope.athletes(
                     modifier = Modifier.fillParentMaxSize(),
                     contentAlignment = Alignment.Center,
                 ) {
-                    CircularProgressIndicator()
+                    LoadingIndicator()
                 }
             }
         }
