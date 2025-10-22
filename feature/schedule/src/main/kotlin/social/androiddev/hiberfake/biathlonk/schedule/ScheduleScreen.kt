@@ -106,7 +106,7 @@ private fun ScheduleScreen(
                 actions = {
                     IconButton(onClick = onSettingsClick) {
                         Icon(
-                            imageVector = Icons.Filled.Settings,
+                            imageVector = Icons.Default.Settings,
                             contentDescription = stringResource(uiR.string.action_settings),
                         )
                     }

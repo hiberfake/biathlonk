@@ -1,4 +1,4 @@
-package social.androiddev.hiberfake.biathlonk.core.ui.icons.default
+package social.androiddev.hiberfake.biathlonk.core.ui.icons.outline
 
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
@@ -7,15 +7,15 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import social.androiddev.hiberfake.biathlonk.core.ui.icons.Icons
 
-val Icons.Default.Leaderboard: ImageVector by lazy(LazyThreadSafetyMode.NONE) {
+val Icons.Outlined.Leaderboard: ImageVector by lazy(LazyThreadSafetyMode.NONE) {
     ImageVector.Builder(
-        name = "Default.Leaderboard",
+        name = "Outline.Leaderboard",
         defaultWidth = 24.dp,
         defaultHeight = 24.dp,
         viewportWidth = 960f,
         viewportHeight = 960f,
     ).apply {
-        path(fill = SolidColor(Color(0xFF000000))) {
+        path(fill = SolidColor(Color.Black)) {
             moveTo(160f, 760f)
             horizontalLineToRelative(160f)
             verticalLineToRelative(-320f)

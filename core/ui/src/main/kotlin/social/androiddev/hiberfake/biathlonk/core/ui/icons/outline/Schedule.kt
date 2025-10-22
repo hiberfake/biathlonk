@@ -1,4 +1,4 @@
-package social.androiddev.hiberfake.biathlonk.core.ui.icons.default
+package social.androiddev.hiberfake.biathlonk.core.ui.icons.outline
 
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
@@ -7,15 +7,15 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 import social.androiddev.hiberfake.biathlonk.core.ui.icons.Icons
 
-val Icons.Default.Schedule: ImageVector by lazy(LazyThreadSafetyMode.NONE) {
+val Icons.Outlined.Schedule: ImageVector by lazy(LazyThreadSafetyMode.NONE) {
     ImageVector.Builder(
-        name = "Default.Schedule",
+        name = "Outline.Schedule",
         defaultWidth = 24.dp,
         defaultHeight = 24.dp,
         viewportWidth = 960f,
         viewportHeight = 960f,
     ).apply {
-        path(fill = SolidColor(Color(0xFF000000))) {
+        path(fill = SolidColor(Color.Black)) {
             moveTo(520f, 464f)
             verticalLineToRelative(-144f)
             quadToRelative(0f, -17f, -11.5f, -28.5f)

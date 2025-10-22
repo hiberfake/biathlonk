@@ -15,7 +15,7 @@ val Icons.Filled.Settings: ImageVector by lazy(LazyThreadSafetyMode.NONE) {
         viewportWidth = 960f,
         viewportHeight = 960f,
     ).apply {
-        path(fill = SolidColor(Color(0xFF000000))) {
+        path(fill = SolidColor(Color.Black)) {
             moveTo(433f, 880f)
             quadToRelative(-27f, 0f, -46.5f, -18f)
             reflectiveQuadTo(363f, 818f)

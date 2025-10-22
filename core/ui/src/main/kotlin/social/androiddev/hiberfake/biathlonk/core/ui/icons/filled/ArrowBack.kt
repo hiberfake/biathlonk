@@ -15,7 +15,7 @@ val Icons.Filled.ArrowBack: ImageVector by lazy(LazyThreadSafetyMode.NONE) {
         viewportWidth = 960f,
         viewportHeight = 960f,
     ).apply {
-        path(fill = SolidColor(Color(0xFF000000))) {
+        path(fill = SolidColor(Color.Black)) {
             moveToRelative(313f, 520f)
             lineToRelative(196f, 196f)
             quadToRelative(12f, 12f, 11.5f, 28f)
