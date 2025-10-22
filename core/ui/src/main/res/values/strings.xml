@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="action_back">Zurück</string>
+    <string name="action_scroll_to_top">Nach oben</string>
     <string name="action_settings">Einstellungen</string>
 
     <string name="category_women">Frauen</string>

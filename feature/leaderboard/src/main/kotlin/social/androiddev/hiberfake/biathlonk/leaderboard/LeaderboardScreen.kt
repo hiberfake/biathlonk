@@ -1,6 +1,7 @@
 package social.androiddev.hiberfake.biathlonk.leaderboard
 
 import androidx.activity.compose.ReportDrawnWhen
+import androidx.compose.animation.core.VisibilityThreshold
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.IntrinsicSize
@@ -18,21 +19,31 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ButtonGroupDefaults
 import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LoadingIndicator
+import androidx.compose.material3.PlainTooltip
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.ToggleButton
 import androidx.compose.material3.ToggleButtonDefaults
+import androidx.compose.material3.TooltipAnchorPosition
+import androidx.compose.material3.TooltipBox
+import androidx.compose.material3.TooltipDefaults
 import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.animateFloatingActionButton
+import androidx.compose.material3.rememberTooltipState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -52,6 +63,7 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.coroutines.launch
 import social.androiddev.hiberfake.biathlonk.core.designsystem.theme.BiathlonTheme
 import social.androiddev.hiberfake.biathlonk.core.model.Athlete
 import social.androiddev.hiberfake.biathlonk.core.model.Category
@@ -61,6 +73,7 @@ import social.androiddev.hiberfake.biathlonk.core.ui.BiathlonListItemDefaults
 import social.androiddev.hiberfake.biathlonk.core.ui.R
 import social.androiddev.hiberfake.biathlonk.core.ui.UiState
 import social.androiddev.hiberfake.biathlonk.core.ui.icons.Icons
+import social.androiddev.hiberfake.biathlonk.core.ui.icons.filled.ArrowUpward
 import social.androiddev.hiberfake.biathlonk.core.ui.icons.filled.Female
 import social.androiddev.hiberfake.biathlonk.core.ui.icons.filled.Male
 import social.androiddev.hiberfake.biathlonk.core.ui.layout.plus
@@ -79,7 +92,7 @@ internal fun LeaderboardRoute(
 }
 
 @Composable
-private fun LeaderboardScreen(
+fun LeaderboardScreen(
     state: UiState<ImmutableList<CupResults>>,
     modifier: Modifier = Modifier,
 ) {
@@ -87,9 +100,11 @@ private fun LeaderboardScreen(
     ReportDrawnWhen { state !is UiState.Loading }
 
     val layoutDirection = LocalLayoutDirection.current
+    val coroutineScope = rememberCoroutineScope()
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
     var selectedIndex by rememberSaveable { mutableIntStateOf(0) }
     val categories = remember { Category.entries }
+    val listState = rememberLazyListState()
     val dividerPadding = remember {
         with(BiathlonListItemDefaults) {
             PaddingValues(
@@ -146,10 +161,46 @@ private fun LeaderboardScreen(
                 scrollBehavior = scrollBehavior,
             )
         },
+        floatingActionButton = {
+            val fabVisible by remember {
+                derivedStateOf {
+                    listState.firstVisibleItemScrollOffset > Int.VisibilityThreshold
+                }
+            }
+
+            TooltipBox(
+                positionProvider = TooltipDefaults.rememberTooltipPositionProvider(positioning = TooltipAnchorPosition.Above),
+                tooltip = {
+                    PlainTooltip {
+                        Text(text = stringResource(R.string.action_scroll_to_top))
+                    }
+                },
+                state = rememberTooltipState(),
+            ) {
+                FloatingActionButton(
+                    onClick = {
+                        coroutineScope.launch {
+                            listState.animateScrollToItem(index = 0)
+                            scrollBehavior.state.contentOffset = 0f
+                        }
+                    },
+                    modifier = Modifier.animateFloatingActionButton(
+                        visible = fabVisible,
+                        alignment = Alignment.BottomEnd,
+                    ),
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.ArrowUpward,
+                        contentDescription = stringResource(R.string.action_scroll_to_top),
+                    )
+                }
+            }
+        },
         contentWindowInsets = WindowInsets.safeDrawing,
     ) { contentPadding ->
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
+            state = listState,
             contentPadding = contentPadding.plus(bottom = 8.dp),
         ) {
             athletes(
